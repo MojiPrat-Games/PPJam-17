@@ -1,12 +1,29 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PickupDrop : MonoBehaviour
+public class PickupThrowLogic : MonoBehaviour
 {
     public Transform holdPoint;
     public float pickupRange = 3f;
     public LayerMask pickupLayer;
+    public float minThrowForce = 5f;
+    public float maxThrowForce = 20f;
+    public float chargeSpeed = 10f;
+    public Image powerBar; 
+
     private GameObject heldItem;
     private GameObject highlightedItem;
+    private bool isCharging = false;
+    private float throwForce;
+    
+    public static PickupThrowLogic Instance { get; private set; }
+
+    private bool isHolding = false;
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Update()
     {
@@ -15,8 +32,12 @@ public class PickupDrop : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (heldItem == null) TryPickup();
-            else DropItem();
+            else StartChargingThrow();
         }
+
+        if (isCharging) ChargeThrow();
+
+        if (Input.GetKeyUp(KeyCode.E) && isCharging) ThrowItem();
     }
 
     void HandleHighlight()
@@ -56,16 +77,45 @@ public class PickupDrop : MonoBehaviour
     {
         if (highlightedItem == null) return;
         heldItem = highlightedItem;
-        ResetHighlight(); 
+        ResetHighlight();
+        isHolding = true;
         heldItem.transform.SetParent(holdPoint);
         heldItem.transform.localPosition = Vector3.zero;
         heldItem.GetComponent<Rigidbody>().isKinematic = true;
     }
 
-    void DropItem()
+    void StartChargingThrow()
     {
-        heldItem.GetComponent<Rigidbody>().isKinematic = false;
-        heldItem.transform.SetParent(null);
-        heldItem = null;
+        isCharging = true;
+        throwForce = minThrowForce;
+        powerBar.gameObject.SetActive(true);
+    }
+
+    void ChargeThrow()
+    {
+        throwForce += chargeSpeed * Time.deltaTime;
+        throwForce = Mathf.Clamp(throwForce, minThrowForce, maxThrowForce);
+        powerBar.fillAmount = (throwForce - minThrowForce) / (maxThrowForce - minThrowForce);
+    }
+
+    void ThrowItem()
+    {
+        isCharging = false;
+        isHolding = false;
+        powerBar.gameObject.SetActive(false);
+
+        if (heldItem != null)
+        {
+            Rigidbody rb = heldItem.GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+            rb.AddForce(transform.forward * throwForce, ForceMode.Impulse);
+            heldItem.transform.SetParent(null);
+            heldItem = null;
+        }
+    }
+
+    public bool IsHolding()
+    {
+        return isHolding;
     }
 }

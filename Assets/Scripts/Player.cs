@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float speed = 2f;
     [SerializeField] private float lookSpeed = 2f;
 
+    [SerializeField] private float gravity = -9.81f;
+    private Vector3 verticalVelocity;
     private float verticalRotation = 0f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,6 +34,14 @@ public class Player : MonoBehaviour
 
         Vector3 moveVector = transform.right * moveX + transform.forward * moveY;
         controller.Move(moveVector.normalized * speed * Time.deltaTime);
+
+        if(controller.isGrounded && verticalVelocity.y < 0)
+        {
+            verticalVelocity.y = -2f;
+        }
+
+        verticalVelocity.y += gravity * Time.deltaTime;
+        controller.Move(verticalVelocity * Time.deltaTime);
     }
 
     void CameraLook()

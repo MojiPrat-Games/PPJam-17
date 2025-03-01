@@ -10,12 +10,17 @@ public class CookingPot : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         Ingredient ingredient = other.GetComponent<Ingredient>();
-        if (ingredient != null)
+        
+        if(!PickupThrowLogic.Instance.IsHolding())
         {
-            ingredientNames.Add(ingredient.ingredientName);
-            Debug.Log("You added " + ingredient.ingredientName);
-            Destroy(other.gameObject); // Remove ingredient once thrown in
+            if (ingredient != null)
+            {
+                ingredientNames.Add(ingredient.ingredientName);
+                Debug.Log("You added " + ingredient.ingredientName);
+                Destroy(other.gameObject); // Remove ingredient once thrown in
+            }
         }
+        
     }
 
     void Update()
