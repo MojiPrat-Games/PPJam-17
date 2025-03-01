@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class FirstPersonController : MonoBehaviour
 {
     private CharacterController controller;
     private Camera playerCamera;
