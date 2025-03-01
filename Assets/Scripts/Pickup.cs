@@ -30,6 +30,7 @@ public class PickupDrop : MonoBehaviour
             {
                 if (highlightedItem != null) ResetHighlight();
                 highlightedItem = hit.collider.gameObject;
+                Debug.Log("Holding " + highlightedItem.GetComponent<Ingredient>().ingredientName);
                 ToggleOutline(highlightedItem, true);
             }
         }
