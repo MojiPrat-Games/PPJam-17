@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="54c9741f-a33a-4a38-8325-8c8887e5e479" name="Changes" comment="" />
+    <list default="true" id="54c9741f-a33a-4a38-8325-8c8887e5e479" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PPJam-17/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PPJam-17/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/OrderManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/OrderManager.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -89,7 +92,7 @@
       <workItem from="1740819898032" duration="335000" />
       <workItem from="1740832997218" duration="1284000" />
       <workItem from="1740849365389" duration="1377000" />
-      <workItem from="1740906710126" duration="964000" />
+      <workItem from="1740906710126" duration="2640000" />
     </task>
     <servers />
   </component>

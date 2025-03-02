@@ -1654,11 +1654,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   possibleIngredients:
-  - Dragon Essence
-  - Frosthorn Leaf
-  - Lunar Crystal
-  - Sap Potion
-  - Thunderwin Twig
+  - Dragon
+  - Frosthorn
+  - Lunar
+  - Sap
+  - Thunderwin
   orderText: {fileID: 1623495114}
   timerText: {fileID: 1484959092}
   scoreText: {fileID: 1627506934}

@@ -7,7 +7,7 @@ using TMPro;
 public class OrderManager : MonoBehaviour
 {
     public static OrderManager Instance;
-    [SerializeField] private List<string> possibleIngredients = new List<string> { "Dragon Essence", "Frosthorn Leaf", "Lunar Crystal", "Sap Potion", "Thunderwin Twig" };
+    [SerializeField] private List<string> possibleIngredients = new List<string> { "Dragon", "Frosthorn", "Lunar", "Sap", "Thundertwig" };
 
     [SerializeField] private TextMeshProUGUI orderText;
     [SerializeField] private TextMeshProUGUI timerText;
@@ -56,7 +56,7 @@ public class OrderManager : MonoBehaviour
                 currentOrder.Add(ingredient);
         }
 
-        orderText.text = "Order: " + string.Join(" + ", currentOrder);
+        orderText.text = "Order: " + string.Join(" ", currentOrder);
         timeLeft = orderTime;
     }
 
