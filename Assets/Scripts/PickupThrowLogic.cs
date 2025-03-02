@@ -84,6 +84,7 @@ public class PickupThrowLogic : MonoBehaviour
 
         Rigidbody rb = heldItem.GetComponent<Rigidbody>();
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         rb.useGravity = false;  
         rb.isKinematic = false;
 
@@ -129,8 +130,14 @@ public class PickupThrowLogic : MonoBehaviour
             rb.linearVelocity = Vector3.zero;
             rb.AddForce(transform.forward * throwForce, ForceMode.Impulse);
             heldItem.transform.SetParent(null);
+            rb.constraints = RigidbodyConstraints.None;
             heldItem = null;
         }
+    }
+
+    public string GetHighligtedItemName()
+    {
+        return highlightedItem.GetComponent<Ingredient>().ingredientName;
     }
 
     public bool IsHolding()

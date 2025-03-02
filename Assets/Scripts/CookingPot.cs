@@ -41,26 +41,29 @@ public class CookingPot : MonoBehaviour
     }
 
     void FinishCooking()
+{
+    if (ingredientNames.Count > 0)
     {
-        if (ingredientNames.Count > 0)
-        {
-            string finalDish = GenerateDishName();
-            Debug.Log("You made: " + finalDish);
-        }
-        else
-        {
-            Debug.Log("You didn't add any ingredients!");
-        }
-        isCooking = false;
-        ingredientNames.Clear();
+        string finalDish = GenerateDishName();
+        Debug.Log("You made: " + finalDish);
+        OrderManager.Instance.CheckOrder(finalDish); 
     }
+    else
+    {
+        Debug.Log("You didn't add any ingredients!");
+    }
+
+    isCooking = false;
+    ingredientNames.Clear();
+}
+
 
     string GenerateDishName()
     {
-        if (ingredientNames.Count == 1) return ingredientNames[0] + " Soup";
+        if (ingredientNames.Count == 1) return ingredientNames[0];
 
-        string prefix = ingredientNames[0]; // First ingredient
-        string suffix = ingredientNames[ingredientNames.Count - 1]; // Last ingredient
+        string prefix = ingredientNames[0]; 
+        string suffix = ingredientNames[ingredientNames.Count - 1]; 
         return prefix + " " + suffix + " Stew";
     }
 }
