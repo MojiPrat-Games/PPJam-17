@@ -17,7 +17,7 @@ public class PickupThrowLogic : MonoBehaviour
     private bool isCharging = false;
     private float throwForce;
     private Coroutine followCoroutine;
-    
+
     public static PickupThrowLogic Instance { get; private set; }
 
     private bool isHolding = false;
@@ -85,7 +85,7 @@ public class PickupThrowLogic : MonoBehaviour
         Rigidbody rb = heldItem.GetComponent<Rigidbody>();
         Collider col = heldItem.GetComponent<Collider>();
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
         rb.useGravity = false;  
         rb.isKinematic = false;
         col.enabled = false;
@@ -141,11 +141,34 @@ public class PickupThrowLogic : MonoBehaviour
 
     public string GetHighligtedItemName()
     {
-        return highlightedItem.GetComponent<Ingredient>().ingredientName;
+        Ingredient ingredient = highlightedItem?.GetComponent<Ingredient>();
+        return ingredient != null ? ingredient.ingredientName : "Unknown";
     }
 
     public bool IsHolding()
     {
         return isHolding;
+    }
+
+    // NEW: check if player is holding a dish
+    public bool IsHoldingDish()
+    {
+        return heldItem != null && heldItem.GetComponent<FinalProduct>() != null;
+    }
+
+    // NEW: get held dish name
+    public string GetHeldDishName()
+    {
+        return heldItem ? heldItem.name : "";
+    }
+
+    // NEW: remove held dish after delivery
+    public void DeliverHeldDish()
+    {
+        if (heldItem)
+        {
+            Destroy(heldItem);
+            heldItem = null;
+        }
     }
 }

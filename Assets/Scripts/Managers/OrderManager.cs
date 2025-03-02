@@ -11,9 +11,12 @@ public class OrderManager : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI orderText;
     [SerializeField] private TextMeshProUGUI timerText;
+
+    [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private float orderTime = 30f;
     [SerializeField] private int score = 0;
 
+    
     private List<string> currentOrder = new List<string>();
     private float timeLeft;
 
@@ -62,7 +65,7 @@ public class OrderManager : MonoBehaviour
         if (cookedDish == GenerateOrderName()) // Compare with expected dish name
         {
             score += 10;
-            Debug.Log("Correct Order! Score: " + score);
+            scoreText.text = score.ToString();
         }
         else
         {
@@ -73,6 +76,6 @@ public class OrderManager : MonoBehaviour
 
     public string GenerateOrderName()
     {
-        return currentOrder[0] + " " + currentOrder[currentOrder.Count - 1] + " Stew";
+        return currentOrder[0] + " " + currentOrder[currentOrder.Count - 1] + " Elixir";
     }
 }
