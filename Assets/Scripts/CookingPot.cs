@@ -62,23 +62,20 @@ public class CookingPot : MonoBehaviour
 
     void FinishCooking()
     {
-        isCooking = false;
-        cookingTimerText.gameObject.SetActive(false);
-
         if (ingredientNames.Count > 0)
         {
             string finalDish = GenerateDishName();
             Debug.Log("You made: " + finalDish);
-
-            SpawnDish(finalDish);
+            OrderManager.Instance.CheckOrder(finalDish);
         }
         else
         {
             Debug.Log("You didn't add any ingredients!");
         }
-        
+        isCooking = false;
         ingredientNames.Clear();
     }
+
 
     void SpawnDish(string dishName)
     {
@@ -90,9 +87,6 @@ public class CookingPot : MonoBehaviour
 
     string GenerateDishName()
     {
-        if (ingredientNames.Count == 1) return ingredientNames[0];
-        string prefix = ingredientNames[0]; 
-        string suffix = ingredientNames[ingredientNames.Count - 1];
-        return prefix + " " + suffix + " Elixir";
+        return string.Join(" ", ingredientNames) + " Elixir"; // Exact match with OrderManager
     }
 }
