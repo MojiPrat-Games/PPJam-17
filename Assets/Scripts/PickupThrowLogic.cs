@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,12 +10,13 @@ public class PickupThrowLogic : MonoBehaviour
     public float minThrowForce = 5f;
     public float maxThrowForce = 20f;
     public float chargeSpeed = 10f;
-    public Image powerBar; 
+    public Image powerBar;
 
     private GameObject heldItem;
     private GameObject highlightedItem;
     private bool isCharging = false;
     private float throwForce;
+    private Coroutine followCoroutine;
     
     public static PickupThrowLogic Instance { get; private set; }
 
@@ -51,7 +53,6 @@ public class PickupThrowLogic : MonoBehaviour
             {
                 if (highlightedItem != null) ResetHighlight();
                 highlightedItem = hit.collider.gameObject;
-                Debug.Log("Holding " + highlightedItem.GetComponent<Ingredient>().ingredientName);
                 ToggleOutline(highlightedItem, true);
             }
         }
@@ -76,12 +77,27 @@ public class PickupThrowLogic : MonoBehaviour
     void TryPickup()
     {
         if (highlightedItem == null) return;
+
         heldItem = highlightedItem;
         ResetHighlight();
         isHolding = true;
-        heldItem.transform.SetParent(holdPoint);
-        heldItem.transform.localPosition = Vector3.zero;
-        heldItem.GetComponent<Rigidbody>().isKinematic = true;
+
+        Rigidbody rb = heldItem.GetComponent<Rigidbody>();
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        rb.useGravity = false;  
+        rb.isKinematic = false;
+
+        followCoroutine = StartCoroutine(FollowHoldPoint(rb));
+    }
+
+    IEnumerator FollowHoldPoint(Rigidbody rb)
+    {
+        while (heldItem != null)
+        {
+            Vector3 targetPos = holdPoint.position;
+            rb.linearVelocity = (targetPos - rb.position) * 10f; 
+            yield return null;
+        }
     }
 
     void StartChargingThrow()
@@ -106,8 +122,11 @@ public class PickupThrowLogic : MonoBehaviour
 
         if (heldItem != null)
         {
+            StopCoroutine(followCoroutine);
             Rigidbody rb = heldItem.GetComponent<Rigidbody>();
             rb.isKinematic = false;
+            rb.useGravity = true; 
+            rb.linearVelocity = Vector3.zero;
             rb.AddForce(transform.forward * throwForce, ForceMode.Impulse);
             heldItem.transform.SetParent(null);
             heldItem = null;
