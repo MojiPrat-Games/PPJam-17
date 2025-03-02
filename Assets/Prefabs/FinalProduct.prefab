@@ -150,7 +150,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8a3d3c9a3f0bdf84a87a52cd35d5e965, type: 2}
+  - {fileID: 2100000, guid: b877fa08414039b4ea8b789c25b74ab7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: 7066486364088120373}
   - component: {fileID: 1545084516931283774}
   - component: {fileID: -4665938580192874461}
+  - component: {fileID: 5651259712884087560}
   m_Layer: 3
   m_Name: FinalProduct
   m_TagString: Untagged
@@ -269,3 +270,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   finalProductName: 
+--- !u!122 &5651259712884087560
+Halo:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8835992196855142655}
+  m_Enabled: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4288782753
+  m_Size: 14.78
