@@ -13,13 +13,15 @@ public class OrderManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI orderText;
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private TextMeshProUGUI feedbackText; 
+    [SerializeField] private TextMeshProUGUI feedbackText;
+    
+    [SerializeField] private Transform[] spawnPoints;
+    [SerializeField] private GameObject[] ingredientPrefabs;
 
-    [SerializeField] private float orderTime = 30f;
-    [SerializeField] private int score = 0;
-
+    private Dictionary<string, GameObject> ingredientDictionary = new Dictionary<string, GameObject>();
     private List<string> currentOrder = new List<string>();
     private float timeLeft;
+    private int score = 0;
 
     void Awake()
     {
@@ -28,6 +30,10 @@ public class OrderManager : MonoBehaviour
 
     void Start()
     {
+        foreach (GameObject prefab in ingredientPrefabs)
+        {
+            ingredientDictionary[prefab.name] = prefab;
+        }
         GenerateNewOrder();
     }
 
@@ -40,30 +46,32 @@ public class OrderManager : MonoBehaviour
         }
         else
         {
-            ShowFeedback("❌ Order Failed!", Color.red);
-            GenerateNewOrder(); 
+            ShowFeedback("Order Timeout!", Color.red);
+            GenerateNewOrder();
         }
     }
 
     void GenerateNewOrder()
     {
+        RespawnUsedIngredients();
+        
         currentOrder.Clear();
-        int ingredientCount = Random.Range(2, 4); 
+        int ingredientCount = Random.Range(2, 4);
 
         for (int i = 0; i < ingredientCount; i++)
         {
             string ingredient = possibleIngredients[Random.Range(0, possibleIngredients.Count)];
-            if (!currentOrder.Contains(ingredient)) 
+            if (!currentOrder.Contains(ingredient))
                 currentOrder.Add(ingredient);
         }
 
         orderText.text = "Order: " + string.Join(" ", currentOrder);
-        timeLeft = orderTime;
+        timeLeft = 30f;
     }
 
     public void CheckOrder(string cookedDish)
     {
-        if (cookedDish == GenerateOrderName()) // Compare with expected dish name
+        if (cookedDish == GenerateOrderName())
         {
             score += 10;
             scoreText.text = score.ToString();
@@ -95,11 +103,22 @@ public class OrderManager : MonoBehaviour
 
         foreach (string ingredient in currentOrder)
         {
-            string[] words = ingredient.Split(' '); 
-            cleanedNames.Add(words[0]); 
+            string[] words = ingredient.Split(' ');
+            cleanedNames.Add(words[0]);
         }
 
         return string.Join(" ", cleanedNames) + " Elixir";
     }
 
+    void RespawnUsedIngredients()
+    {
+        foreach (string ingredientName in currentOrder)
+        {
+            if (ingredientDictionary.ContainsKey(ingredientName))
+            {
+                int randomIndex = Random.Range(0, spawnPoints.Length);
+                Instantiate(ingredientDictionary[ingredientName], spawnPoints[randomIndex].position, Quaternion.identity);
+            }
+        }
+    }
 }
