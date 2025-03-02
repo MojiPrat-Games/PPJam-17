@@ -83,10 +83,12 @@ public class PickupThrowLogic : MonoBehaviour
         isHolding = true;
 
         Rigidbody rb = heldItem.GetComponent<Rigidbody>();
+        Collider col = heldItem.GetComponent<Collider>();
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         rb.useGravity = false;  
         rb.isKinematic = false;
+        col.enabled = false;
 
         followCoroutine = StartCoroutine(FollowHoldPoint(rb));
     }
@@ -125,8 +127,10 @@ public class PickupThrowLogic : MonoBehaviour
         {
             StopCoroutine(followCoroutine);
             Rigidbody rb = heldItem.GetComponent<Rigidbody>();
+            Collider col = heldItem.GetComponent<Collider>();
             rb.isKinematic = false;
             rb.useGravity = true; 
+            col.enabled = true;
             rb.linearVelocity = Vector3.zero;
             rb.AddForce(transform.forward * throwForce, ForceMode.Impulse);
             heldItem.transform.SetParent(null);

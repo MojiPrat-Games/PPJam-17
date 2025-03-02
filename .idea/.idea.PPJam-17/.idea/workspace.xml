@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54c9741f-a33a-4a38-8325-8c8887e5e479" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PPJam-17/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PPJam-17/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Ingredients.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Ingredients.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PickupThrowLogic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PickupThrowLogic.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +93,8 @@
       <updated>1740819894653</updated>
       <workItem from="1740819898032" duration="335000" />
       <workItem from="1740832997218" duration="1284000" />
-      <workItem from="1740849365389" duration="775000" />
+      <workItem from="1740849365389" duration="1377000" />
+      <workItem from="1740906710126" duration="366000" />
     </task>
     <servers />
   </component>
